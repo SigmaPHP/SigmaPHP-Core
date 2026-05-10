@@ -193,7 +193,7 @@ class HelperTest extends TestCase
         });
 
         $this->assertEquals(
-            '<h1> Hi, Omar </h1>',
+            '<h1>Hi, Omar</h1>',
             container('view')->render('index')
         );
     }

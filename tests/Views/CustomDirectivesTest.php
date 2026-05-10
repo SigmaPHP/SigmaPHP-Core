@@ -50,7 +50,7 @@ class CustomDirectivesTest extends TestCase
         print $this->viewHandler->render('index');
 
         $this->expectOutputString(
-            '<div> https://example.com/api/v1/user?name=ahmed </div>'
+            '<div>https://example.com/api/v1/user?name=ahmed</div>'
         );
     }
 
@@ -74,7 +74,7 @@ class CustomDirectivesTest extends TestCase
 
         print $this->viewHandler->render('index');
 
-        $this->expectOutputString('<div> https://example.com/products </div>');
+        $this->expectOutputString('<div>https://example.com/products</div>');
     }
 
     /**
@@ -97,7 +97,7 @@ class CustomDirectivesTest extends TestCase
 
         print $this->viewHandler->render('index');
 
-        $this->expectOutputString('<p> world </p>');
+        $this->expectOutputString('<p>world</p>');
     }
 
     /**
@@ -121,7 +121,7 @@ class CustomDirectivesTest extends TestCase
 
         print $this->viewHandler->render('index');
 
-        $this->expectOutputString('<p> world </p>');
+        $this->expectOutputString('<p>world</p>');
 
         unset($_SESSION['hello']);
     }
@@ -145,7 +145,7 @@ class CustomDirectivesTest extends TestCase
         print $this->viewHandler->render('index');
 
         $this->expectOutputString(
-            ' <input type="hidden" name="_method" value="put" /> '
+            '<input type="hidden" name="_method" value="put" />'
         );
     }
 
@@ -168,7 +168,7 @@ class CustomDirectivesTest extends TestCase
         print $this->viewHandler->render('index');
 
         $this->expectOutputString(
-            '<script src=" https://example.com/static/js/script.js "></script>'
+            '<script src="https://example.com/static/js/script.js"></script>'
         );
     }
 }
