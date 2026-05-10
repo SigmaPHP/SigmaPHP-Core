@@ -95,11 +95,20 @@ class ExceptionHandler implements ExceptionHandlerInterface
 
         foreach ($thrown->getTrace() as $trace) {
             if (isset($trace['file']) && isset($trace['line'])) {
-                $files[] = $trace['file'] . ":" . $trace['line'];
+                // since the code executed using eval() might cause the file
+                // name in the trace to look like -> : eval()'d code
+                // we have to remove this manually, there's so many other cases
+                // where special message will be printed next to the file name
+                // in the trace, so the sippet below will handle those also
+                $cleanTraceFile = trim(explode(":", $trace['file'])[0]);
+
+                $files[] = $cleanTraceFile . ":" . $trace['line'];
             }
 
             if (isset($trace['class']) && isset($trace['function'])) {
                 $classes[] = $trace['class'] . "->" . $trace['function'];
+            } else {
+                $classes[] = $trace['function'];
             }
         }
 
