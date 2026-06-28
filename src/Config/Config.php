@@ -3,11 +3,12 @@
 namespace SigmaPHP\Core\Config;
 
 use SigmaPHP\Core\Interfaces\Config\ConfigInterface;
+use SigmaPHP\Collections\Collection;
 
 /**
  * Config Class
  */
-class Config implements ConfigInterface
+class Config extends Collection implements ConfigInterface
 {
     /**
      * @var array $configs
@@ -19,7 +20,7 @@ class Config implements ConfigInterface
      */
     public function __constructor()
     {
-        $this->configs = [];
+        parent::__constructor($this->load());
     }
 
     /**
@@ -58,16 +59,6 @@ class Config implements ConfigInterface
 
             closedir($handle);
         }
-    }
-
-    /**
-     * Get all config values.
-     *
-     * @return array
-     */
-    public function getAll()
-    {
-        return $this->configs;
     }
 
     /**

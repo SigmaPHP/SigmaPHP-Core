@@ -35,9 +35,6 @@ class ConfigServiceProvider implements ServiceProviderInterface
             // create new config manager
             $configManager = new Config();
 
-            // load all config files
-            $configManager->load();
-
             // set error display
             $configManager->setErrorsDisplay($configManager->get('app.env'));
 

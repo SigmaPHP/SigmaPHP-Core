@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +33,7 @@ class ConfigTest extends TestCase
     {
         $this->assertTrue($this->config->set('hello', 'world'));
     }
-    
+
     /**
      * Test has config method.
      *
@@ -44,7 +44,7 @@ class ConfigTest extends TestCase
         $this->config->set('hello', 'world');
         $this->assertTrue($this->config->has('hello'));
     }
-    
+
     /**
      * Test get config method.
      *
@@ -55,7 +55,7 @@ class ConfigTest extends TestCase
         $this->config->set('hello', 'world');
         $this->assertEquals('world', $this->config->get('hello'));
     }
-    
+
     /**
      * Test get config using dot notation.
      *
@@ -72,7 +72,7 @@ class ConfigTest extends TestCase
         $this->config->set('app', $configs);
         $this->assertEquals('1.0.0', $this->config->get('app.api.ver'));
     }
-    
+
     /**
      * Test get config will return default value if set.
      *
@@ -84,7 +84,7 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * Test get config method return empty string when the key 
+     * Test get config method return empty string when the key
      * is not found.
      *
      * @return void
@@ -96,7 +96,7 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * Test get config method return empty string when the key 
+     * Test get config method return empty string when the key
      * is not found using dot notation.
      *
      * @return void
@@ -116,6 +116,6 @@ class ConfigTest extends TestCase
     {
         $this->config->set('hello', 'world');
         $this->config->set('bye', 'world');
-        $this->assertIsArray($this->config->getAll());
+        $this->assertIsArray($this->config->all());
     }
 }
