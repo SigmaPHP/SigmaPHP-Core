@@ -35,14 +35,15 @@ class ConfigServiceProvider implements ServiceProviderInterface
             // create new config manager
             $configManager = new Config();
 
-            // load all config files
-            $configManager->load();
-
             // set error display
-            $configManager->setErrorsDisplay($configManager->get('app.env'));
+            $configManager->setErrorsDisplay(
+                $configManager->get('app.env', 'development')
+            );
 
             // set timezone
-            $configManager->setTimezone($configManager->get('app.timezone'));
+            $configManager->setTimezone(
+                $configManager->get('app.timezone', 'UTC')
+            );
 
             return $configManager;
         });

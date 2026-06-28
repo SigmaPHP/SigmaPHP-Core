@@ -24,13 +24,6 @@ interface ConfigInterface
     public function load();
 
     /**
-     * Get all config values.
-     *
-     * @return array
-     */
-    public function getAll();
-
-    /**
      * Get config value.
      *
      * @param string $key

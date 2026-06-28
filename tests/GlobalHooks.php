@@ -17,14 +17,14 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
     {
         $this->setScriptName();
 
-        // create and initialize new Kernel instance
-        new \SigmaPHP\Core\App\Kernel();
-
         $this->createEnvFile();
         $this->createConfigFiles();
         $this->createTemplates();
         $this->createRoutes();
         $this->createFileStorage();
+
+        // create and initialize new Kernel instance
+        new \SigmaPHP\Core\App\Kernel();
     }
 
     /**

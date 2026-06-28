@@ -40,7 +40,7 @@ class BaseModelTest extends TestCase
             'pass' => $GLOBALS['DB_PASS'],
             'port' => $GLOBALS['DB_PORT'],
         ];
-        
+
         // create test table
         $this->createTestTable('test_models');
 
@@ -214,7 +214,7 @@ class BaseModelTest extends TestCase
 
         $testFetchAllModels = $this->model->all();
 
-        $this->assertEquals(5, count($testFetchAllModels));
+        $this->assertEquals(5, $testFetchAllModels->count());
     }
 
     /**
