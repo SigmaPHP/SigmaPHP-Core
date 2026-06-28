@@ -1,8 +1,9 @@
-- Config
+- Config (Done)
     -- we need to revisit the set() and has(), since it doesn't support the dot
        notation!
 
 - BaseModel: only all() and hasRelations()
     -- Side Note: the class require significs amount of refactor for the data types and such :(
+    -- The shitty class also has all methods marked as "final", BLOCKED!!
 
-- HTTP
+- HTTP (Ignored)

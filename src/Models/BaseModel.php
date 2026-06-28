@@ -12,7 +12,7 @@ abstract class BaseModel extends Model implements BaseModelInterface
 {
     /**
      * BaseModel Constructor
-     * 
+     *
      * @param Connector $dbConnection
      * @param string $dbName
      * @param array $values
