@@ -13,9 +13,9 @@ class Config extends Collection implements ConfigInterface
     /**
      * Config Constructor
      */
-    public function __constructor()
+    public function __construct()
     {
-        parent::__constructor($this->load());
+        parent::__construct($this->load());
     }
 
     /**
