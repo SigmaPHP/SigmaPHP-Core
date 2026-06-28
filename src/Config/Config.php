@@ -11,11 +11,6 @@ use SigmaPHP\Collections\Collection;
 class Config extends Collection implements ConfigInterface
 {
     /**
-     * @var array $configs
-     */
-    private $configs;
-
-    /**
      * Config Constructor
      */
     public function __constructor()
@@ -48,17 +43,21 @@ class Config extends Collection implements ConfigInterface
      */
     public function load()
     {
+        $configs = [];
+
         $path = self::getFullPath('config');
 
         if ($handle = opendir($path)) {
             while (($file = readdir($handle))) {
                 if (in_array($file, ['.', '..'])) continue;
-                $this->configs[str_replace('.php', '', $file)] =
+                $configs[str_replace('.php', '', $file)] =
                     require $path . '/' . $file;
             }
 
             closedir($handle);
         }
+
+        return $configs;
     }
 
     /**
@@ -70,7 +69,7 @@ class Config extends Collection implements ConfigInterface
      */
     public function get($key, $default = '')
     {
-        $value = $this->configs;
+        $value = $this->items;
 
         foreach (explode('.', $key) as $option) {
             $value = $value[$option] ?? null;
@@ -84,11 +83,23 @@ class Config extends Collection implements ConfigInterface
      *
      * @param string $key
      * @param mixed $val
-     * @return bool
+     * @return $this
      */
     public function set($key, $val)
     {
-        return (bool) ($this->configs[$key] = $val);
+        $arr = &$this->items;
+
+        foreach (explode('.', $key) as $option) {
+            if (!array_key_exists($option, $arr)) {
+                $arr[$option] = [];
+            }
+
+            $arr = &$arr[$option];
+        }
+
+        $arr = $val;
+
+        return $this;
     }
 
     /**
@@ -99,7 +110,17 @@ class Config extends Collection implements ConfigInterface
      */
     public function has($key)
     {
-        return (bool) $this->configs[$key];
+        $value = $this->items;
+
+        foreach (explode('.', $key) as $option) {
+            if (!array_key_exists($option, $value)) {
+                return false;
+            }
+
+            $value = $value[$option];
+        }
+
+        return true;
     }
 
     /**

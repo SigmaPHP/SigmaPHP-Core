@@ -31,7 +31,23 @@ class ConfigTest extends TestCase
      */
     public function testSetConfig()
     {
-        $this->assertTrue($this->config->set('hello', 'world'));
+        $this->config->set('hello', 'world');
+        $this->assertTrue($this->config->has('hello'));
+    }
+
+    /**
+     * Test set config using dot notation.
+     *
+     * @return void
+     */
+    public function testSetConfigUsingDotNotation()
+    {
+        $configs = [
+            'ver' => '1.0.0'
+        ];
+
+        $this->config->set('app.api', $configs);
+        $this->assertEquals('1.0.0', $this->config->get('app.api.ver'));
     }
 
     /**
@@ -43,6 +59,23 @@ class ConfigTest extends TestCase
     {
         $this->config->set('hello', 'world');
         $this->assertTrue($this->config->has('hello'));
+    }
+
+    /**
+     * Test has config using dot notation.
+     *
+     * @return void
+     */
+    public function testHasConfigUsingDotNotation()
+    {
+        $configs = [
+            'api' => [
+                'ver' => '1.0.0'
+            ]
+        ];
+
+        $this->config->set('app', $configs);
+        $this->assertTrue($this->config->has('app.api.ver'));
     }
 
     /**
