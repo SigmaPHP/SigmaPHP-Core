@@ -5,12 +5,12 @@ namespace App\Providers;
 use SigmaPHP\Container\Interfaces\ServiceProviderInterface;
 use SigmaPHP\Container\Container;
 
-class $serviceProviderName implements ServiceProviderInterface
+class $className implements ServiceProviderInterface
 {
     /**
-     * The boot method , will be called after all 
+     * The boot method , will be called after all
      * dependencies were defined in the container.
-     * 
+     *
      * @param Container $container
      * @return void
      */
@@ -21,7 +21,7 @@ class $serviceProviderName implements ServiceProviderInterface
 
     /**
      * Add a definition to the container.
-     * 
+     *
      * @param Container $container
      * @return void
      */
