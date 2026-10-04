@@ -222,44 +222,19 @@ class ConsoleManager
                 Create controller.
             create:middleware {middleware name}
                 Create middleware.
-            create:migration {migration name}
-                Create migration file.
-            create:model {model name}
-                Create model. This command will generate
-                in addition a new migration file automatically.
             create:provider {service provider name}
                 Create service provider.
             create:secret
                 Generate app secret key , and save it into .env file.
-            create:seeder {seeder name}
-                Create seeder file.
             create:uploads
                 Create uploads folder.
             create:view {view name}
                 Create view.
-            drop
-                Drop all tables in the database.
-            fresh
-                Drop all tables in the database. then will run
-                all migrations and seed the database.
-            help
-                Print all available commands (this menu).
-            migrate {migration name}
-                Run migration/s files.
-            rollback {date}
-                Rollback latest migration. or choose specific date
-                to rollback to.
             run {port}
                 Run the app with PHP built in server on the provided
                 port number or otherwise the default 8888 port.
-            seed {seeder name}
-                Run seeder/s.
             test
                 Run unit tests.
-            truncate
-                Delete the data in all tables.
-            version
-                Print the current version of SigmaPHP Framework.
 
         Examples:
             - php sigma-cli version
