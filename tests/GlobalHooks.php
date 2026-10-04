@@ -25,6 +25,7 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
         $this->createControllers();
         $this->createMiddlewares();
         $this->createProviders();
+        $this->createPublic();
 
         // create and initialize new Kernel instance
         new \SigmaPHP\Core\App\Kernel();
@@ -45,6 +46,7 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
         $this->removeControllers();
         $this->removeMiddlewares();
         $this->removeProviders();
+        $this->removePublic();
     }
 
     /**
@@ -93,6 +95,7 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
                     "middlewares_path" => "middlewares/",
                     "providers_path" => "providers/",
                     "views_path" => "templates/",
+                    "cache_path" => "cache/",
                     "routes_path" => "routes/",
                     "upload_path" => "uploads/",
                     "static_assets_route" => "static",
@@ -222,6 +225,18 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
     {
         if (!is_dir('providers')) {
             mkdir('providers');
+        }
+    }
+
+    /**
+     * Create dummy public directory.
+     *
+     * @return void
+     */
+    private function createPublic()
+    {
+        if (!is_dir('public')) {
+            mkdir('public');
         }
     }
 
@@ -370,6 +385,26 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
 
         if (is_dir('providers')) {
             rmdir('providers');
+        }
+    }
+
+    /**
+     * Remove the dummy public directory.
+     *
+     * @return void
+     */
+    private function removePublic()
+    {
+        $files = glob('public/*');
+
+        foreach ($files as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
+
+        if (is_dir('public')) {
+            rmdir('public');
         }
     }
 }

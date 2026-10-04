@@ -13,6 +13,11 @@ use PassGen\PassGen;
 class CreateSecret extends Command
 {
     /**
+     *
+     */
+    const APP_SECRET_KEY_LENGTH = 32;
+
+    /**
      * Initialize the command.
      *
      * @return void
@@ -41,7 +46,7 @@ class CreateSecret extends Command
         }
 
         // generate new secret key
-        $key = PassGen::generate(32);
+        $key = PassGen::generate(self::APP_SECRET_KEY_LENGTH);
 
         // replace invalid symbols from the generated key
         $key  = str_replace(['#', '\'', '"'], ['Z', 'X', '7'], $key);
