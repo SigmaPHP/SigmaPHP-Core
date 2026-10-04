@@ -41,7 +41,7 @@ class CreateView extends Command
 
         $viewName = $this->getArgument('name');
 
-        $filesystem->create($path . '/' . $viewName . '.php');
+        $filesystem->create($path . '/' . $viewName . '.template.html');
 
         $this->success(
             "The view '{$viewName}' was created successfully"

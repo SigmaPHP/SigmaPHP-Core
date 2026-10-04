@@ -283,6 +283,10 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
             unlink('templates/index.template.html');
         }
 
+        if (file_exists('templates/users_table.template.html')) {
+            unlink('templates/users_table.template.html');
+        }
+
         if (is_dir('templates')) {
             rmdir('templates');
         }
