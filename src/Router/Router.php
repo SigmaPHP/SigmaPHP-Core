@@ -3,6 +3,8 @@
 namespace SigmaPHP\Core\Router;
 
 use SigmaPHP\Core\Interfaces\Router\RouterInterface;
+use SigmaPHP\Router\Interfaces\PageNotFoundHandlerInterface;
+use SigmaPHP\Router\Interfaces\StaticAssetsHandlerInterface;
 
 /**
  * Router Class
