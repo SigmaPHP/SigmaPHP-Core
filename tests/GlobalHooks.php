@@ -26,6 +26,7 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
         $this->createMiddlewares();
         $this->createProviders();
         $this->createPublic();
+        $this->createCommands();
 
         // create and initialize new Kernel instance
         new \SigmaPHP\Core\App\Kernel();
@@ -47,6 +48,7 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
         $this->removeMiddlewares();
         $this->removeProviders();
         $this->removePublic();
+        $this->removeCommands();
     }
 
     /**
@@ -94,6 +96,7 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
                     "controllers_path" => "controllers/",
                     "middlewares_path" => "middlewares/",
                     "providers_path" => "providers/",
+                    "commands_path" => "commands/",
                     "views_path" => "templates/",
                     "cache_path" => "cache/",
                     "routes_path" => "routes/",
@@ -237,6 +240,18 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
     {
         if (!is_dir('public')) {
             mkdir('public');
+        }
+    }
+
+    /**
+     * Create dummy commands directory.
+     *
+     * @return void
+     */
+    private function createCommands()
+    {
+        if (!is_dir('commands')) {
+            mkdir('commands');
         }
     }
 
@@ -409,6 +424,22 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
 
         if (is_dir('public')) {
             rmdir('public');
+        }
+    }
+
+    /**
+     * Remove the dummy commands directory.
+     *
+     * @return void
+     */
+    private function removeCommands()
+    {
+        if (file_exists('commands/FormatCommand.php')) {
+            unlink('commands/FormatCommand.php');
+        }
+
+        if (is_dir('commands')) {
+            rmdir('commands');
         }
     }
 }

@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Middlewares;
+
+use SigmaPHP\Console\Command;
+
+class $className extends Command
+{
+    /**
+     * Initialize the command.
+     *
+     * @return void
+     */
+    public function init()
+    {
+        //
+    }
+
+    /**
+     * Execute.
+     *
+     * @return void
+     */
+    public function execute()
+    {
+        //
+    }
+}
