@@ -23,11 +23,26 @@ interface RouterInterface
     public function loadRoutes();
 
     /**
+     * Add routes.
+     *
+     * @param array $routes
+     * @return void
+     */
+    public function addRoutes($routes);
+
+    /**
      * List all registered routes.
      *
      * @return array
      */
     public function listRoutes();
+
+    /**
+     * Get loaded (unprocessed) routes.
+     *
+     * @return array
+     */
+    public function getRoutes();
 
     /**
      * Generate URL from route's name.

@@ -29,14 +29,35 @@ class ListRoutes extends Command
      */
     public function execute()
     {
-        $path = root_path(config('app.routes_path'));
+        $data = [];
+        $header = ['Method', 'Path', 'Controller', 'Action', 'Name'];
 
-        $filesystem = new Filesystem();
+        foreach (container('router')->listRoutes() as $route) {
+            $row = [' ', ' ', ' ', ' ', ' '];
 
-        if (!$filesystem->exists($path)) {
-            throw new PathNotFoundException("The path '{$path}' doesn't exist");
+            if (isset($route['method'])) {
+                $row[0] = implode(',', $route['method']);
+            }
+
+            if (isset($route['path'])) {
+                $row[1] = '/' . $route['path'];
+            }
+
+            if (isset($route['controller'])) {
+                $row[2] = $route['controller'] ?: ' ';
+            }
+
+            if (isset($route['action'])) {
+                $row[3] = $route['action'];
+            }
+
+            if (isset($route['name'])) {
+                if (!is_numeric($route['name'])) {
+                    $row[4] = $route['name'];
+                }
+            }
+
+            $data[] = $row;
         }
-
-        d(container('router')->listRoutes());
     }
 }

@@ -22,7 +22,9 @@ class ListRoutesTest extends CommandTestCase
 
         $command->execute();
 
-        // $this->assertTrue(file_exists($targetPath));
+        $this->expectOutputString(
+            file_get_contents(__DIR__ . '/list_routes.output'),
+        );
     }
 }
 

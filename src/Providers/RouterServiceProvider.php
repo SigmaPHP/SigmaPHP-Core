@@ -49,7 +49,7 @@ class RouterServiceProvider implements ServiceProviderInterface
 
             // set the Routing Engine (SigmaPHP-Router)
             $router->setRouterEngine(new RouterEngine(
-                $router->listRoutes(),
+                $router->getRoutes(),
                 $configManager->get('app.base_path')
             ));
 

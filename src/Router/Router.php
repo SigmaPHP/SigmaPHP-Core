@@ -85,6 +85,16 @@ class Router implements RouterInterface
     }
 
     /**
+     * Get loaded (unprocessed) routes.
+     *
+     * @return array
+     */
+    public function getRoutes()
+    {
+        return $this->routes;
+    }
+
+    /**
      * Generate URL from route's name.
      *
      * @param string $routeName

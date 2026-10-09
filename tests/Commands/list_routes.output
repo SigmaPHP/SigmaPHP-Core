@@ -1,0 +1,13 @@
+--------------------------------------------------------------------------------------------------
+| Method    | Path               | Controller          | Action              | Name              |
+--------------------------------------------------------------------------------------------------
+| get       | /test              |                     |                     |                   |
+| get       | /                  |                     | home_page           | home              |
+| get       | /contact-us        | ContactUsController | showContactUsForm   | contact_us.show   |
+| post      | /contact-us        | ContactUsController | submitContactUsForm | contact_us.submit |
+| get       | /posts/{id?}       | PostController      | index               | posts.list        |
+| get,post  | /posts/create      | PostController      | create              | posts.create      |
+| get,patch | /posts/update/{id} | PostController      | update              | posts.update      |
+| delete    | /posts/{id}        | PostController      | delete              | posts.delete      |
+| get       | /posts             | PostController      | index               | posts.list        |
+--------------------------------------------------------------------------------------------------

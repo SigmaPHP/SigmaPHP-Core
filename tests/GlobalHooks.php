@@ -170,7 +170,84 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
         if (!file_exists('web.php')) {
             file_put_contents(
                 'routes/web.php',
-                '<?php return [["path" => "/test", "name" => "test"]];'
+                <<<ROUTES
+                 <?php return [
+                    [
+                        'path' => '/test',
+                    ],
+                    [
+                        'name' => 'home',
+                        'path' => '/',
+                        'method' => 'get',
+                        'action' => 'home_page',
+                    ],
+                    [
+                        'name' => 'contact_us.show',
+                        'path' => '/contact-us',
+                        'method' => 'get',
+                        'controller' => ContactUsController::class,
+                        'action' => 'showContactUsForm'
+                    ],
+                    [
+                        'name' => 'contact_us.submit',
+                        'path' => '/contact-us',
+                        'method' => 'post',
+                        'controller' => ContactUsController::class,
+                        'action' => 'submitContactUsForm'
+                    ],
+                    [
+                        'group' => 'posts',
+                        'prefix' => 'posts/',
+                        'middlewares' => [
+                            AuthMiddleware::class,
+                            UserIsActiveMiddleware::class,
+                            UserCanControlPostsMiddleware::class,
+                        ],
+                        'routes' => [
+                            [
+                                'name' => 'list',
+                                'path' => '/{id?}',
+                                'method' => 'get',
+                                'controller' => PostController::class,
+                                'action' => 'index',
+                                'validation' => [
+                                    'id' => '[0-9]+'
+                                ]
+                            ],
+                            [
+                                'name' => 'create',
+                                'path' => '/create',
+                                'method' => 'get,post',
+                                'controller' => PostController::class,
+                                'action' => 'create'
+                            ],
+                            [
+                                'name' => 'update',
+                                'path' => '/update/{id}',
+                                'method' => 'get,patch',
+                                'controller' => PostController::class,
+                                'action' => 'update',
+                                'validation' => [
+                                    'id' => '[0-9]+'
+                                ]
+                            ],
+                            [
+                                'name' => 'delete',
+                                'path' => '/{id}',
+                                'method' => 'delete',
+                                'controller' => PostController::class,
+                                'action' => 'delete',
+                                'validation' => [
+                                    'id' => '[0-9]+'
+                                ],
+                                'middlewares' => [
+                                    CheckPostIsNotPublishedMiddleware::class,
+                                ],
+                            ],
+                        ]
+                    ]
+                ];
+                ROUTES
             );
         }
     }
