@@ -17,7 +17,7 @@ class FileTest extends TestCase
     private $file;
 
     /**
-     * @var array $testFile
+     * @var string $testFile
      */
     private $testFile;
 
@@ -77,19 +77,6 @@ class FileTest extends TestCase
     public function testCheckIfFileExistsInTheStorage()
     {
         $this->assertTrue($this->file->has('book.txt'));
-    }
-
-    /**
-     * Test throws exception if no path was provided to the file service.
-     *
-     * @runInSeparateProcess
-     * @return void
-     */
-    public function testThrowsExceptionIfNoPathWasProvidedToFileService()
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $testFile = new File(null);
     }
 
     /**

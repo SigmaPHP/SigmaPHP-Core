@@ -2,6 +2,7 @@
 
 namespace SigmaPHP\Core\Router;
 
+use SigmaPHP\Filesystem\Filesystem;
 use SigmaPHP\Router\Interfaces\StaticAssetsHandlerInterface;
 
 /**
@@ -55,7 +56,7 @@ class StaticAssetsHandler implements StaticAssetsHandlerInterface
         $resourcePath = str_replace(config('app.base_path'), '', $resourcePath);
         $resourcePath = root_path('public/' . $resourcePath);
 
-        if (!file_exists($resourcePath)) {
+        if (!(new Filesystem())->exists($resourcePath)) {
             return container('response')->responseData(
                 container('view')->render('errors/404'),
                 'text/html',

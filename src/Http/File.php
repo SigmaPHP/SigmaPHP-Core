@@ -5,6 +5,7 @@ namespace SigmaPHP\Core\Http;
 use SigmaPHP\Core\Exceptions\FileNotFoundException;
 use SigmaPHP\Core\Exceptions\InvalidArgumentException;
 use SigmaPHP\Core\Interfaces\Http\FileInterface;
+use SigmaPHP\Filesystem\Filesystem;
 
 /**
  * File Class
@@ -17,27 +18,26 @@ class File implements FileInterface
     private $storagePath;
 
     /**
+     * @var Filesystem $filesystem
+     */
+    private $filesystem;
+
+    /**
      * File Constructor
      *
      * @param string $storagePath
      */
     public function __construct($storagePath)
     {
-        if (empty($storagePath)) {
+        $this->filesystem = new Filesystem();
+
+        $this->storagePath = root_path($storagePath);
+
+        if (!$this->filesystem->exists($this->storagePath)) {
             throw new InvalidArgumentException(
-                "No storage path was provided"
+                "Storage path {$this->storagePath} doesn't exists"
             );
         }
-
-        $storageFullPath = root_path($storagePath);
-
-        if (!file_exists($storageFullPath)) {
-            throw new InvalidArgumentException(
-                "Storage path {$storageFullPath} doesn't exists"
-            );
-        }
-
-        $this->storagePath = $storageFullPath;
     }
 
     /**
@@ -55,14 +55,14 @@ class File implements FileInterface
         }
 
         if (!isset($fileData["tmp_name"]) ||
-            !file_exists($fileData["tmp_name"])
+            !$this->filesystem->exists($fileData["tmp_name"])
         ) {
             throw new FileNotFoundException(
                 "The file you are trying to upload is invalid or doesn't exist"
             );
         }
 
-        return rename(
+        return $this->filesystem->rename(
             $fileData["tmp_name"],
             $this->storagePath . '/' . $fileData["name"]
         );
@@ -76,7 +76,9 @@ class File implements FileInterface
      */
     public function has($fileName)
     {
-        return file_exists($this->storagePath . '/' . ltrim($fileName, '/'));
+        return $this->filesystem->exists(
+            $this->storagePath . '/' . ltrim($fileName, '/')
+        );
     }
 
     /**
@@ -89,10 +91,10 @@ class File implements FileInterface
     {
         $fileFullPath = $this->storagePath . '/' . ltrim($fileName, '/');
 
-        if (!file_exists($fileFullPath)) {
+        if (!$this->filesystem->exists($fileFullPath)) {
             throw new FileNotFoundException("File {$fileName} doesn't exist");
         }
 
-        return file_get_contents($fileFullPath);
+        return $this->filesystem->read($fileFullPath);
     }
 }

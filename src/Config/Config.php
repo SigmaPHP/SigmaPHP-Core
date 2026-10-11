@@ -4,6 +4,7 @@ namespace SigmaPHP\Core\Config;
 
 use SigmaPHP\Core\Interfaces\Config\ConfigInterface;
 use SigmaPHP\Collections\Collection;
+use SigmaPHP\Filesystem\Filesystem;
 
 /**
  * Config Class
@@ -47,14 +48,8 @@ class Config extends Collection implements ConfigInterface
 
         $path = self::getFullPath('config');
 
-        if ($handle = opendir($path)) {
-            while (($file = readdir($handle))) {
-                if (in_array($file, ['.', '..'])) continue;
-                $configs[str_replace('.php', '', $file)] =
-                    require $path . '/' . $file;
-            }
-
-            closedir($handle);
+        foreach ((new Filesystem())->list($path, true, true) as $file) {
+            $configs[str_replace('.php', '', basename($file))] = require $file;
         }
 
         return $configs;

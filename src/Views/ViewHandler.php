@@ -4,6 +4,7 @@ namespace SigmaPHP\Core\Views;
 
 use SigmaPHP\Core\Interfaces\Views\ViewHandlerInterface;
 use SigmaPHP\Core\Exceptions\HttpException;
+use SigmaPHP\Filesystem\Filesystem;
 use SigmaPHP\Template\Engine;
 
 /**
@@ -94,7 +95,7 @@ class ViewHandler implements ViewHandlerInterface
      */
     public function templateExists($templateName)
     {
-        return file_exists(
+        return (new Filesystem())->exists(
             config('app.views_path') . str_replace('.', '/', $templateName)
         );
     }

@@ -6,6 +6,7 @@ use SigmaPHP\Core\Interfaces\App\KernelInterface;
 use SigmaPHP\Container\Container;
 use SigmaPHP\Core\Config\Config;
 use EnvParser\Parser;
+use SigmaPHP\Filesystem\Filesystem;
 
 /**
  * Kernel Class
@@ -27,19 +28,21 @@ class Kernel implements KernelInterface
      */
     public function __construct()
     {
-        // create DI container and load all service providers
-        self::$container = new Container();
+        $filesystem = new Filesystem();
 
         // load environment variables
-        if (file_exists(Config::getFullPath('.env'))) {
+        if ($filesystem->exists(Config::getFullPath('.env'))) {
             (new Parser())->parse(Config::getFullPath('.env'));
         }
+
+        // create DI container and load all service providers
+        self::$container = new Container();
 
         // Please note , since the config manager still not registered in the
         // container , it's nearly impossible to read the service providers
         // path from the config file , maybe in the future we can find a
         // solution for this issue , but as for now we will hardcoded it !
-        $userDefinedProvidersPath = '/app/Providers';
+        $userDefinedProvidersPath = 'app/Providers';
 
         // user defined providers (App\Providers)
         $userDefinedProvidersPath = Config::getFullPath(
@@ -48,15 +51,12 @@ class Kernel implements KernelInterface
 
         $userDefinedProviders = [];
 
-        if (file_exists($userDefinedProvidersPath)) {
-            if ($handle = opendir($userDefinedProvidersPath)) {
-                while (($file = readdir($handle))) {
-                    if (in_array($file, ['.', '..'])) continue;
-                    $userDefinedProviders[] = ("App\\Providers\\" .
+        if ($filesystem->exists($userDefinedProvidersPath)) {
+            foreach ($filesystem->list($userDefinedProvidersPath, true, true)
+                as $file
+            ) {
+                $userDefinedProviders[] = ("App\\Providers\\" .
                     (str_replace('.php', '', $file)));
-                }
-
-                closedir($handle);
             }
         }
 
