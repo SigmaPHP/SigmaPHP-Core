@@ -3,6 +3,8 @@
 namespace SigmaPHP\Core\Tests\TestCases;
 
 use PHPUnit\Framework\TestCase;
+use SigmaPHP\Console\Command;
+use SigmaPHP\Console\Interfaces\CommandInterface;
 use SigmaPHP\Console\IO;
 
 /**
@@ -42,5 +44,36 @@ class CommandTestCase extends TestCase
         if (file_exists('fake_input_stream')) {
             unlink('fake_input_stream');
         }
+    }
+
+    /**
+     * Command factory.
+     *
+     * @param Command $class
+     * @return CommandInterface
+     */
+    protected function commandFactory($class)
+    {
+        $command = new $class();
+
+        $command->setIOHandler($this->ioHandler);
+
+        return $command;
+    }
+
+    /**
+     * Inject input into a stream.
+     *
+     * @param string $input
+     * @return void
+     */
+    protected function injectInput($input)
+    {
+        $res = fopen('fake_input_stream', 'r+');
+
+        ftruncate($res, 0);
+        rewind($res);
+        fwrite($res, $input);
+        rewind($res);
     }
 }

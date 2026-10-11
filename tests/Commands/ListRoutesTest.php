@@ -16,11 +16,9 @@ class ListRoutesTest extends CommandTestCase
      */
     public function testCommandExecution()
     {
-        $command = new _ListRoutes();
+        $command = $this->commandFactory(ListRoutes::class);
 
         $this->ioHandler->setOutputStream(fopen('php://output', 'r+'));
-
-        $command->setIOHandler($this->ioHandler);
 
         $command->execute();
 
@@ -28,10 +26,4 @@ class ListRoutesTest extends CommandTestCase
             file_get_contents(__DIR__ . '/list_routes.output'),
         );
     }
-}
-
-class _ListRoutes extends ListRoutes
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

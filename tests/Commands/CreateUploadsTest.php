@@ -16,19 +16,11 @@ class CreateUploadsTest extends CommandTestCase
      */
     public function testCommandExecution()
     {
-        $command = new _CreateUploads();
-
-        $command->setIOHandler($this->ioHandler);
+        $command = $this->commandFactory(CreateUploads::class);
 
         $command->execute();
 
         $this->assertTrue(file_exists('uploads'));
         $this->assertTrue(file_exists('public/uploads'));
     }
-}
-
-class _CreateUploads extends CreateUploads
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

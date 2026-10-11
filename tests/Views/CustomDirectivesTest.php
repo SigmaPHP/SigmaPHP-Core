@@ -50,7 +50,7 @@ class CustomDirectivesTest extends TestCase
         print $this->viewHandler->render('index');
 
         $this->expectOutputString(
-            '<div>https://example.com/api/v1/user?name=ahmed</div>'
+            ' <div>https://example.com/api/v1/user?name=ahmed</div>'
         );
     }
 
@@ -168,7 +168,7 @@ class CustomDirectivesTest extends TestCase
         print $this->viewHandler->render('index');
 
         $this->expectOutputString(
-            '<script src="https://example.com/static/js/script.js"></script>'
+            ' <script src="https://example.com/static/js/script.js"></script>'
         );
     }
 }

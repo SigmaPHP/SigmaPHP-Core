@@ -1,7 +1,7 @@
  --------------------------------------------------------------------------------------------------
 | Method    | Path               | Controller          | Action              | Name              |
 --------------------------------------------------------------------------------------------------
-| get       | /test              |                     |                     |                   |
+| get       | /test              |                     |                     | test              |
 | get       | /                  |                     | home_page           | home              |
 | get       | /contact-us        | ContactUsController | showContactUsForm   | contact_us.show   |
 | post      | /contact-us        | ContactUsController | submitContactUsForm | contact_us.submit |

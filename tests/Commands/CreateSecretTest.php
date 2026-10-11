@@ -19,9 +19,7 @@ class CreateSecretTest extends CommandTestCase
         // disable randomness
         mt_srand(1);
 
-        $command = new _CreateSecret();
-
-        $command->setIOHandler($this->ioHandler);
+        $command = $this->commandFactory(CreateSecret::class);
 
         $command->execute();
 
@@ -32,10 +30,4 @@ class CreateSecretTest extends CommandTestCase
             ) !== false
         );
     }
-}
-
-class _CreateSecret extends CreateSecret
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

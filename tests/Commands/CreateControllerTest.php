@@ -17,20 +17,13 @@ class CreateControllerTest extends CommandTestCase
     public function testCommandExecution()
     {
         $targetPath = 'controllers/UserController.php';
-        $command = new _CreateController();
 
-        $command->setIOHandler($this->ioHandler);
+        $command = $this->commandFactory(CreateController::class);
 
-        $command->_arguments()['name']->setValue('User');
+        $command->getArguments()['name']->setValue('User');
 
         $command->execute();
 
         $this->assertTrue(file_exists($targetPath));
     }
-}
-
-class _CreateController extends CreateController
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

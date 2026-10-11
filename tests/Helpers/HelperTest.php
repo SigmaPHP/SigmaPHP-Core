@@ -182,6 +182,13 @@ class HelperTest extends TestCase
     public function testCustomTemplateDirectives()
     {
         if (file_exists('templates/index.template.html')) {
+            // clear cache
+            foreach (glob('cache/*') as $cacheFile) {
+                if (file_exists($cacheFile)) {
+                    unlink($cacheFile);
+                }
+            }
+
             file_put_contents(
                 'templates/index.template.html',
                 '<h1>{% greeting("Omar") %}</h1>'

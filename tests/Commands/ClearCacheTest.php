@@ -23,18 +23,10 @@ class ClearCacheTest extends CommandTestCase
             );
         }
 
-        $command = new _ClearCache();
-
-        $command->setIOHandler($this->ioHandler);
+        $command = $this->commandFactory(ClearCache::class);
 
         $command->execute();
 
         $this->assertTrue(empty(glob('cache/*')));
     }
-}
-
-class _ClearCache extends ClearCache
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

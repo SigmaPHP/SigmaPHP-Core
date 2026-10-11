@@ -17,20 +17,13 @@ class CreateCommandTest extends CommandTestCase
     public function testCommandExecution()
     {
         $targetPath = 'commands/FormatCommand.php';
-        $command = new _CreateCommand();
 
-        $command->setIOHandler($this->ioHandler);
+        $command = $this->commandFactory(CreateCommand::class);
 
-        $command->_arguments()['name']->setValue('Format');
+        $command->getArguments()['name']->setValue('Format');
 
         $command->execute();
 
         $this->assertTrue(file_exists($targetPath));
     }
-}
-
-class _CreateCommand extends CreateCommand
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

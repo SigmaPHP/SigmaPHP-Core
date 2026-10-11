@@ -17,20 +17,13 @@ class CreateProviderTest extends CommandTestCase
     public function testCommandExecution()
     {
         $targetPath = 'providers/UserServiceProvider.php';
-        $command = new _CreateProvider();
 
-        $command->setIOHandler($this->ioHandler);
+        $command = $this->commandFactory(CreateProvider::class);
 
-        $command->_arguments()['name']->setValue('User');
+        $command->getArguments()['name']->setValue('User');
 
         $command->execute();
 
         $this->assertTrue(file_exists($targetPath));
     }
-}
-
-class _CreateProvider extends CreateProvider
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }

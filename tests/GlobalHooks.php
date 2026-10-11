@@ -174,6 +174,7 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
                  <?php return [
                     [
                         'path' => '/test',
+                        'name' => 'test',
                     ],
                     [
                         'name' => 'home',

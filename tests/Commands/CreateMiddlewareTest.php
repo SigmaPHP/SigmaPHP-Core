@@ -17,20 +17,13 @@ class CreateMiddlewareTest extends CommandTestCase
     public function testCommandExecution()
     {
         $targetPath = 'middlewares/AuthMiddleware.php';
-        $command = new _CreateMiddleware();
 
-        $command->setIOHandler($this->ioHandler);
+        $command = $this->commandFactory(CreateMiddleware::class);
 
-        $command->_arguments()['name']->setValue('Auth');
+        $command->getArguments()['name']->setValue('Auth');
 
         $command->execute();
 
         $this->assertTrue(file_exists($targetPath));
     }
-}
-
-class _CreateMiddleware extends CreateMiddleware
-{
-    public function _options() {return $this->options;}
-    public function _arguments() {return $this->arguments;}
 }
