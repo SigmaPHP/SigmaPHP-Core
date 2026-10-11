@@ -15,7 +15,7 @@ if (!function_exists('container')) {
     /**
      * Get the DI Container instance.
      *
-     * @return \SigmaPHP\Container\Container
+     * @return mixed
      */
     function container($item = '') {
         $container = \SigmaPHP\Core\App\Kernel::getContainer();
@@ -54,6 +54,7 @@ if (!function_exists('root_path')) {
     /**
      * Return the full path of a directory.
      *
+     * @param string $dir
      * @return string
      */
     function root_path($dir) {
@@ -148,6 +149,7 @@ if (!function_exists('defineCustomTemplateDirective')) {
     /**
      * Register new template's custom directive.
      *
+     * @param string $name
      * @param callable $callback
      * @return void
      */

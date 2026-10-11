@@ -1,14 +1,14 @@
 <?php
-        
+
 namespace App\Middlewares;
 
 use SigmaPHP\Core\Router\BaseMiddleware;
 
-class $middlewareName extends BaseMiddleware
+class $className extends BaseMiddleware
 {
     /**
      * Handle the incoming request.
-     * 
+     *
      * @return mixed
      */
     public function handle()

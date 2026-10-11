@@ -1,10 +1,10 @@
 <?php
-        
+
 namespace App\Controllers;
 
 use SigmaPHP\Core\Controllers\BaseController;
 
-class $controllerName extends BaseController
+class $className extends BaseController
 {
     //
 }

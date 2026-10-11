@@ -3,6 +3,9 @@
 namespace SigmaPHP\Core\Router;
 
 use SigmaPHP\Core\Interfaces\Router\RouterInterface;
+use SigmaPHP\Filesystem\Filesystem;
+use SigmaPHP\Router\Interfaces\PageNotFoundHandlerInterface;
+use SigmaPHP\Router\Interfaces\StaticAssetsHandlerInterface;
 
 /**
  * Router Class
@@ -53,14 +56,22 @@ class Router implements RouterInterface
      */
     public function loadRoutes()
     {
-        if ($handle = opendir($this->routeFilesPath)) {
-            while (($file = readdir($handle))) {
-                if (in_array($file, ['.', '..'])) continue;
-                $this->routes += require $this->routeFilesPath . '/' . $file;
-            }
-
-            closedir($handle);
+        foreach ((new Filesystem())->list($this->routeFilesPath, true, true)
+            as $file
+        ) {
+            $this->routes += require $file;
         }
+    }
+
+    /**
+     * Add routes.
+     *
+     * @param array $routes
+     * @return void
+     */
+    public function addRoutes($routes)
+    {
+        $this->routerEngine->addRoutes($routes);
     }
 
     /**
@@ -69,6 +80,16 @@ class Router implements RouterInterface
      * @return array
      */
     public function listRoutes()
+    {
+        return $this->routerEngine->listRoutes();
+    }
+
+    /**
+     * Get loaded (unprocessed) routes.
+     *
+     * @return array
+     */
+    public function getRoutes()
     {
         return $this->routes;
     }

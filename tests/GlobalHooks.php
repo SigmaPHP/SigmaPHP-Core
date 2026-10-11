@@ -22,6 +22,11 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
         $this->createTemplates();
         $this->createRoutes();
         $this->createFileStorage();
+        $this->createControllers();
+        $this->createMiddlewares();
+        $this->createProviders();
+        $this->createPublic();
+        $this->createCommands();
 
         // create and initialize new Kernel instance
         new \SigmaPHP\Core\App\Kernel();
@@ -39,6 +44,11 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
         $this->removeTemplates();
         $this->removeRoutes();
         $this->removeFileStorage();
+        $this->removeControllers();
+        $this->removeMiddlewares();
+        $this->removeProviders();
+        $this->removePublic();
+        $this->removeCommands();
     }
 
     /**
@@ -83,8 +93,14 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
 
                 return [
                     "api" => ["version" => "1.0.0"],
+                    "controllers_path" => "controllers/",
+                    "middlewares_path" => "middlewares/",
+                    "providers_path" => "providers/",
+                    "commands_path" => "commands/",
                     "views_path" => "templates/",
+                    "cache_path" => "cache/",
                     "routes_path" => "routes/",
+                    "upload_path" => "uploads/",
                     "static_assets_route" => "static",
                     "timezone" => "UTC",
                     "base_path" => "",
@@ -154,7 +170,85 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
         if (!file_exists('web.php')) {
             file_put_contents(
                 'routes/web.php',
-                '<?php return [["path" => "/test", "name" => "test"]];'
+                <<<ROUTES
+                 <?php return [
+                    [
+                        'path' => '/test',
+                        'name' => 'test',
+                    ],
+                    [
+                        'name' => 'home',
+                        'path' => '/',
+                        'method' => 'get',
+                        'action' => 'home_page',
+                    ],
+                    [
+                        'name' => 'contact_us.show',
+                        'path' => '/contact-us',
+                        'method' => 'get',
+                        'controller' => ContactUsController::class,
+                        'action' => 'showContactUsForm'
+                    ],
+                    [
+                        'name' => 'contact_us.submit',
+                        'path' => '/contact-us',
+                        'method' => 'post',
+                        'controller' => ContactUsController::class,
+                        'action' => 'submitContactUsForm'
+                    ],
+                    [
+                        'group' => 'posts',
+                        'prefix' => 'posts/',
+                        'middlewares' => [
+                            AuthMiddleware::class,
+                            UserIsActiveMiddleware::class,
+                            UserCanControlPostsMiddleware::class,
+                        ],
+                        'routes' => [
+                            [
+                                'name' => 'list',
+                                'path' => '/{id?}',
+                                'method' => 'get',
+                                'controller' => PostController::class,
+                                'action' => 'index',
+                                'validation' => [
+                                    'id' => '[0-9]+'
+                                ]
+                            ],
+                            [
+                                'name' => 'create',
+                                'path' => '/create',
+                                'method' => 'get,post',
+                                'controller' => PostController::class,
+                                'action' => 'create'
+                            ],
+                            [
+                                'name' => 'update',
+                                'path' => '/update/{id}',
+                                'method' => 'get,patch',
+                                'controller' => PostController::class,
+                                'action' => 'update',
+                                'validation' => [
+                                    'id' => '[0-9]+'
+                                ]
+                            ],
+                            [
+                                'name' => 'delete',
+                                'path' => '/{id}',
+                                'method' => 'delete',
+                                'controller' => PostController::class,
+                                'action' => 'delete',
+                                'validation' => [
+                                    'id' => '[0-9]+'
+                                ],
+                                'middlewares' => [
+                                    CheckPostIsNotPublishedMiddleware::class,
+                                ],
+                            ],
+                        ]
+                    ]
+                ];
+                ROUTES
             );
         }
     }
@@ -176,6 +270,66 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
 
         if (!file_exists('uploads/book.txt')) {
             file_put_contents('uploads/book.txt', 'My Book');
+        }
+    }
+
+    /**
+     * Create dummy controllers directory.
+     *
+     * @return void
+     */
+    private function createControllers()
+    {
+        if (!is_dir('controllers')) {
+            mkdir('controllers');
+        }
+    }
+
+    /**
+     * Create dummy middlewares directory.
+     *
+     * @return void
+     */
+    private function createMiddlewares()
+    {
+        if (!is_dir('middlewares')) {
+            mkdir('middlewares');
+        }
+    }
+
+    /**
+     * Create dummy providers directory.
+     *
+     * @return void
+     */
+    private function createProviders()
+    {
+        if (!is_dir('providers')) {
+            mkdir('providers');
+        }
+    }
+
+    /**
+     * Create dummy public directory.
+     *
+     * @return void
+     */
+    private function createPublic()
+    {
+        if (!is_dir('public')) {
+            mkdir('public');
+        }
+    }
+
+    /**
+     * Create dummy commands directory.
+     *
+     * @return void
+     */
+    private function createCommands()
+    {
+        if (!is_dir('commands')) {
+            mkdir('commands');
         }
     }
 
@@ -220,6 +374,10 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
     {
         if (file_exists('templates/index.template.html')) {
             unlink('templates/index.template.html');
+        }
+
+        if (file_exists('templates/users_table.template.html')) {
+            unlink('templates/users_table.template.html');
         }
 
         if (is_dir('templates')) {
@@ -276,6 +434,90 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
 
         if (is_dir('uploads')) {
             rmdir('uploads');
+        }
+    }
+
+    /**
+     * Remove the dummy controllers directory.
+     *
+     * @return void
+     */
+    private function removeControllers()
+    {
+        if (file_exists('controllers/UserController.php')) {
+            unlink('controllers/UserController.php');
+        }
+
+        if (is_dir('controllers')) {
+            rmdir('controllers');
+        }
+    }
+
+    /**
+     * Remove the dummy middlewares directory.
+     *
+     * @return void
+     */
+    private function removeMiddlewares()
+    {
+        if (file_exists('middlewares/AuthMiddleware.php')) {
+            unlink('middlewares/AuthMiddleware.php');
+        }
+
+        if (is_dir('middlewares')) {
+            rmdir('middlewares');
+        }
+    }
+
+    /**
+     * Remove the dummy providers directory.
+     *
+     * @return void
+     */
+    private function removeProviders()
+    {
+        if (file_exists('providers/UserServiceProvider.php')) {
+            unlink('providers/UserServiceProvider.php');
+        }
+
+        if (is_dir('providers')) {
+            rmdir('providers');
+        }
+    }
+
+    /**
+     * Remove the dummy public directory.
+     *
+     * @return void
+     */
+    private function removePublic()
+    {
+        $files = glob('public/*');
+
+        foreach ($files as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
+
+        if (is_dir('public')) {
+            rmdir('public');
+        }
+    }
+
+    /**
+     * Remove the dummy commands directory.
+     *
+     * @return void
+     */
+    private function removeCommands()
+    {
+        if (file_exists('commands/FormatCommand.php')) {
+            unlink('commands/FormatCommand.php');
+        }
+
+        if (is_dir('commands')) {
+            rmdir('commands');
         }
     }
 }
