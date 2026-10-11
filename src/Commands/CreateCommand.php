@@ -47,14 +47,16 @@ class CreateCommand extends Command
             $commandName .= 'Command';
         }
 
-        $commandFile = $path . '/' . $commandName . '.php';
+        $commandFile = concatPath($path, $commandName) . '.php';
 
         $filesystem->create($commandFile);
         $filesystem->write($commandFile,
             str_replace(
                 '$className',
                 $commandName,
-                $filesystem->read(__DIR__ . '/templates/command.php.dist')
+                $filesystem->read(
+                    concatPath(__DIR__, 'templates', 'command.php.dist')
+                )
             )
         );
 

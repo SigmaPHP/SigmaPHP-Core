@@ -57,7 +57,7 @@ if (!function_exists('root_path')) {
      * @param string $dir
      * @return string
      */
-    function root_path($dir) {
+    function root_path($dir = '') {
         return container('config')::getFullPath($dir);
     }
 }
@@ -160,5 +160,23 @@ if (!function_exists('defineCustomTemplateDirective')) {
             $currentCustomDirectives,
             [$name => $callback]
         ));
+    }
+}
+
+if (!function_exists('concatPath')) {
+    /**
+     * Concatenate paths.
+     *
+     * @param string ...$paths
+     * @return string
+     */
+    function concatPath(...$paths) {
+        $finalPath = '';
+
+        foreach ($paths as $path) {
+            $finalPath .= $path . DIRECTORY_SEPARATOR;
+        }
+
+        return rtrim($finalPath, DIRECTORY_SEPARATOR);
     }
 }

@@ -153,7 +153,7 @@ class ExceptionHandler implements ExceptionHandlerInterface
     /**
      * Render trace template.
      *
-     * @param\Throwable $thrown
+     * @param \Throwable $thrown
      * @return string
      */
     private function renderTrace($thrown)
@@ -165,7 +165,7 @@ class ExceptionHandler implements ExceptionHandlerInterface
      * Create new response for the exception.
      *
      * @param \Throwable $thrown
-     * @return SigmaPHP\Core\Http\Response
+     * @return \SigmaPHP\Core\Http\Response
      */
     public static function handle($thrown)
     {

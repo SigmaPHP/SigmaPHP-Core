@@ -64,7 +64,7 @@ class File implements FileInterface
 
         return $this->filesystem->rename(
             $fileData["tmp_name"],
-            $this->storagePath . '/' . $fileData["name"]
+            concatPath($this->storagePath, $fileData["name"])
         );
     }
 
@@ -77,7 +77,7 @@ class File implements FileInterface
     public function has($fileName)
     {
         return $this->filesystem->exists(
-            $this->storagePath . '/' . ltrim($fileName, '/')
+            concatPath($this->storagePath, $fileName)
         );
     }
 
@@ -89,7 +89,7 @@ class File implements FileInterface
      */
     public function get($fileName)
     {
-        $fileFullPath = $this->storagePath . '/' . ltrim($fileName, '/');
+        $fileFullPath = concatPath($this->storagePath, $fileName);
 
         if (!$this->filesystem->exists($fileFullPath)) {
             throw new FileNotFoundException("File {$fileName} doesn't exist");

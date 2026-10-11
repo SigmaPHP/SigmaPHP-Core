@@ -47,14 +47,16 @@ class CreateMiddleware extends Command
             $middlewareName .= 'Middleware';
         }
 
-        $middlewareFile = $path . '/' . $middlewareName . '.php';
+        $middlewareFile = concatPath($path, $middlewareName) . '.php';
 
         $filesystem->create($middlewareFile);
         $filesystem->write($middlewareFile,
             str_replace(
                 '$className',
                 $middlewareName,
-                $filesystem->read(__DIR__ . '/templates/middleware.php.dist')
+                $filesystem->read(
+                    concatPath(__DIR__, 'templates', 'middleware.php.dist')
+                )
             )
         );
 

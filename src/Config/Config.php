@@ -34,7 +34,7 @@ class Config extends Collection implements ConfigInterface
             ))->getFileName()
         , 3);
 
-        return $basePath . '/' . $dis;
+        return concatPath($basePath, $dis);
     }
 
     /**

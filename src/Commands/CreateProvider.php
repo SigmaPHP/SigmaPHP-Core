@@ -47,14 +47,16 @@ class CreateProvider extends Command
             $providerName .= 'ServiceProvider';
         }
 
-        $providerFile = $path . '/' . $providerName . '.php';
+        $providerFile = concatPath($path, $providerName) . '.php';
 
         $filesystem->create($providerFile);
         $filesystem->write($providerFile,
             str_replace(
                 '$className',
                 $providerName,
-                $filesystem->read(__DIR__ . '/templates/provider.php.dist')
+                $filesystem->read(
+                    concatPath(__DIR__, 'templates', 'provider.php.dist')
+                )
             )
         );
 

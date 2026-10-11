@@ -47,14 +47,16 @@ class CreateController extends Command
             $controllerName .= 'Controller';
         }
 
-        $controllerFile = $path . '/' . $controllerName . '.php';
+        $controllerFile = concatPath($path, $controllerName) . '.php';
 
         $filesystem->create($controllerFile);
         $filesystem->write($controllerFile,
             str_replace(
                 '$className',
                 $controllerName,
-                $filesystem->read(__DIR__ . '/templates/controller.php.dist')
+                $filesystem->read(
+                    concatPath(__DIR__, 'templates', 'controller.php.dist')
+                )
             )
         );
 

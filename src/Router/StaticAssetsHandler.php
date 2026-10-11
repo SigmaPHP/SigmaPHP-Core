@@ -32,7 +32,8 @@ class StaticAssetsHandler implements StaticAssetsHandlerInterface
     {
         $extensions = [];
 
-        foreach (explode("\n", file_get_contents(__DIR__ . '/mime.types'))
+        foreach (explode("\n",
+            (new Filesystem())->read(concatPath(__DIR__,  'mime.types')))
             as $line)
         {
             $extensions = explode(',', $line, 2);

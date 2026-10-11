@@ -96,7 +96,9 @@ class ViewHandler implements ViewHandlerInterface
     public function templateExists($templateName)
     {
         return (new Filesystem())->exists(
-            config('app.views_path') . str_replace('.', '/', $templateName)
+            concatPath(
+                config('app.views_path'), str_replace('.', '/', $templateName)
+            )
         );
     }
 }

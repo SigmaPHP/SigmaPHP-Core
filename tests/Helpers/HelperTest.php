@@ -218,4 +218,17 @@ class HelperTest extends TestCase
 
         $this->assertEquals($expected, baseUrl());
     }
+
+    /**
+     * Test concatenate paths.
+     *
+     * @return void
+     */
+    public function testConcatenatePaths()
+    {
+        $this->assertEquals(
+            'var/www/html/app',
+            concatPath('var', 'www', 'html', 'app')
+        );
+    }
 }
