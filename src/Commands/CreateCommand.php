@@ -31,7 +31,7 @@ class CreateCommand extends Command
      */
     public function execute()
     {
-        $path = root_path(config('app.commands_path'));
+        $path = rootPath(config('app.commands_path'));
 
         $filesystem = new Filesystem();
 

@@ -99,13 +99,13 @@ class HelperTest extends TestCase
     }
 
     /**
-     * Test root_path function will return the current file path.
+     * Test rootPath function will return the current file path.
      *
      * @return void
      */
     public function testRootPathFunctionWillReturnTheCurrentFilePath()
     {
-        $this->assertEquals(__DIR__, root_path('tests/Helpers'));
+        $this->assertEquals(__DIR__, rootPath('tests/Helpers'));
     }
 
     /**

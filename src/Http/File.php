@@ -31,7 +31,7 @@ class File implements FileInterface
     {
         $this->filesystem = new Filesystem();
 
-        $this->storagePath = root_path($storagePath);
+        $this->storagePath = rootPath($storagePath);
 
         if (!$this->filesystem->exists($this->storagePath)) {
             throw new InvalidArgumentException(

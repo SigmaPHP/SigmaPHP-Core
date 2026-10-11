@@ -50,14 +50,14 @@ if (!function_exists('config')) {
     }
 }
 
-if (!function_exists('root_path')) {
+if (!function_exists('rootPath')) {
     /**
      * Return the full path of a directory.
      *
      * @param string $dir
      * @return string
      */
-    function root_path($dir = '') {
+    function rootPath($dir = '') {
         return container('config')::getFullPath($dir);
     }
 }

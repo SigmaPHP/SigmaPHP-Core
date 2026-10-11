@@ -72,7 +72,7 @@ class ExceptionHandler implements ExceptionHandlerInterface
         // ToDO: Find better way to load the ViewHandler
 
         $this->viewHandler = new ViewHandler(
-            str_replace(root_path(''), '', __DIR__) . '/templates',
+            str_replace(rootPath(''), '', __DIR__) . '/templates',
             ''
         );
     }

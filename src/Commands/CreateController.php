@@ -31,7 +31,7 @@ class CreateController extends Command
      */
     public function execute()
     {
-        $path = root_path(config('app.controllers_path'));
+        $path = rootPath(config('app.controllers_path'));
 
         $filesystem = new Filesystem();
 

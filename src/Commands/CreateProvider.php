@@ -31,7 +31,7 @@ class CreateProvider extends Command
      */
     public function execute()
     {
-        $path = root_path(config('app.providers_path'));
+        $path = rootPath(config('app.providers_path'));
 
         $filesystem = new Filesystem();
 

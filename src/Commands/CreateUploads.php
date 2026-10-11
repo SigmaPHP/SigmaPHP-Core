@@ -29,7 +29,7 @@ class CreateUploads extends Command
      */
     public function execute()
     {
-        $path = root_path(config('app.uploads_path'));
+        $path = rootPath(config('app.uploads_path'));
 
         $filesystem = new Filesystem();
 
@@ -38,7 +38,7 @@ class CreateUploads extends Command
         }
 
         // create symbolic link
-        $publicPath = root_path('public');
+        $publicPath = rootPath('public');
 
         exec("ln -s {$path} {$publicPath}/uploads &> /dev/null");
 

@@ -31,7 +31,7 @@ class Run extends Command
      */
     public function execute()
     {
-        $path = root_path('public/');
+        $path = rootPath('public/');
 
         $filesystem = new Filesystem();
 

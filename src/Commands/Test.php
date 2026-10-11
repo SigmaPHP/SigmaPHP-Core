@@ -29,7 +29,7 @@ class Test extends Command
      */
     public function execute()
     {
-        $path = root_path('tests/');
+        $path = rootPath('tests/');
 
         $filesystem = new Filesystem();
 
@@ -39,6 +39,6 @@ class Test extends Command
             );
         }
 
-        exec(root_path('vendor/bin/') . "phpunit tests");
+        exec(rootPath('vendor/bin/') . "phpunit tests");
     }
 }

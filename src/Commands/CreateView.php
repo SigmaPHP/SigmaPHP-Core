@@ -31,7 +31,7 @@ class CreateView extends Command
      */
     public function execute()
     {
-        $path = root_path(config('app.views_path'));
+        $path = rootPath(config('app.views_path'));
 
         $filesystem = new Filesystem();
 

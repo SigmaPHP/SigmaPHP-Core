@@ -29,7 +29,7 @@ class ClearCache extends Command
      */
     public function execute()
     {
-        $path = root_path(config('app.cache_path'));
+        $path = rootPath(config('app.cache_path'));
 
         $filesystem = new Filesystem();
 

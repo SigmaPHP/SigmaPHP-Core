@@ -37,7 +37,7 @@ class CreateSecret extends Command
      */
     public function execute()
     {
-        $path = root_path('.env');
+        $path = rootPath('.env');
         $filesystem = new Filesystem();
 
         // check if the .env file is exist

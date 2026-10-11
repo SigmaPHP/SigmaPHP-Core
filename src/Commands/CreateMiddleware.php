@@ -31,7 +31,7 @@ class CreateMiddleware extends Command
      */
     public function execute()
     {
-        $path = root_path(config('app.middlewares_path'));
+        $path = rootPath(config('app.middlewares_path'));
 
         $filesystem = new Filesystem();
 
