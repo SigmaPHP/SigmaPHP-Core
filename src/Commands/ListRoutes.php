@@ -59,5 +59,7 @@ class ListRoutes extends Command
 
             $data[] = $row;
         }
+
+        $this->table->create($header, $data);
     }
 }

@@ -18,6 +18,8 @@ class ListRoutesTest extends CommandTestCase
     {
         $command = new _ListRoutes();
 
+        $this->ioHandler->setOutputStream(fopen('php://output', 'r+'));
+
         $command->setIOHandler($this->ioHandler);
 
         $command->execute();
