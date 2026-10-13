@@ -36,7 +36,7 @@ class CreateProvider extends Command
         $filesystem = new Filesystem();
 
         if (!$filesystem->exists($path)) {
-            throw new PathNotFoundException("The path '{$path}' doesn't exist");
+            $filesystem->createDir($path);
         }
 
         $providerName = $this->getArgument('name');
