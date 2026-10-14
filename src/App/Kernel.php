@@ -55,8 +55,7 @@ class Kernel implements KernelInterface
             foreach ($filesystem->list($userDefinedProvidersPath, true, true)
                 as $file
             ) {
-                $userDefinedProviders[] = ("App\\Providers\\" .
-                    (str_replace('.php', '', $file)));
+                $userDefinedProviders[] = "App\\Providers\\$file";
             }
         }
 
