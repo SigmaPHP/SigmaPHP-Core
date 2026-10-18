@@ -131,6 +131,24 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
                 CONFIG
             );
         }
+
+        if (!file_exists('config/providers.php')) {
+            file_put_contents(
+                'config/providers.php',
+                <<<CONFIG
+                <?php
+
+                return [
+                    \SigmaPHP\Core\Providers\ConfigServiceProvider::class,
+                    \SigmaPHP\Core\Providers\RouterServiceProvider::class,
+                    \SigmaPHP\Core\Providers\ViewServiceProvider::class,
+                    \SigmaPHP\Core\Providers\DBServiceProvider::class,
+                    \SigmaPHP\Core\Providers\HTTPServiceProvider::class,
+                    \SigmaPHP\Core\Providers\FilesystemServiceProvider::class,
+                ];
+                CONFIG
+            );
+        }
     }
 
     /**
@@ -358,6 +376,10 @@ class GlobalHooks implements BeforeFirstTestHook, AfterLastTestHook
 
         if (file_exists('config/database.php')) {
             unlink('config/database.php');
+        }
+
+        if (file_exists('config/providers.php')) {
+            unlink('config/providers.php');
         }
 
         if (is_dir('config')) {

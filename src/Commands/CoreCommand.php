@@ -21,7 +21,7 @@ abstract class CoreCommand extends Command
     public function __construct() {
         parent::__construct();
 
-        $this->filesystem = container('filesystem');
+        $this->filesystem = new Filesystem();
     }
 
     /**
