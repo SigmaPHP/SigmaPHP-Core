@@ -24,6 +24,22 @@ class CreateProviderTest extends CommandTestCase
 
         $command->execute();
 
+        $this->assertTrue(
+            (bool) strpos(
+                file_get_contents('config/providers.php'),
+                '\App\Providers\UserServiceProvider::class,',
+            )
+        );
+
         $this->assertTrue(file_exists($targetPath));
+
+        // remove the dummy provider!
+        $original = str_replace(
+            '\App\Providers\UserServiceProvider::class,',
+            '',
+            file_get_contents('config/providers.php'),
+        );
+
+        file_put_contents('config/providers.php', $original);
     }
 }

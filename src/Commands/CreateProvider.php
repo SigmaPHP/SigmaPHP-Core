@@ -64,10 +64,14 @@ class CreateProvider extends CoreCommand
         // we just add the full class path before the ']'
         $providersList = str_replace(
             ']',
-            '\App\Providers\\' . $providerName . "::class\n]",
+            "    \App\Providers\\" . $providerName . "::class,\n]",
             $providersList
         );
 
+        $this->filesystem->write(
+            rootPath('config/providers.php'),
+            $providersList
+        );
 
         $this->success(
             "The service provider '{$providerName}' was created successfully"
