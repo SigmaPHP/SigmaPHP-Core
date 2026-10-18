@@ -2,7 +2,7 @@
 
 namespace SigmaPHP\Core\Commands;
 
-use SigmaPHP\Core\Commands\CoreCommand;
+use SigmaPHP\Core\Commands\Base\CoreCommand;
 
 /**
  * Create Controller Command.

@@ -47,6 +47,8 @@ class Console
             '\SigmaPHP\DB\Commands'
         );
 
+
+
         $app->run();
     }
 }
