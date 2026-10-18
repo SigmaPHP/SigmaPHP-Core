@@ -2,14 +2,12 @@
 
 namespace SigmaPHP\Core\Commands;
 
-use SigmaPHP\Console\Command;
-use SigmaPHP\Filesystem\Filesystem;
-use SigmaPHP\Core\Exceptions\PathNotFoundException;
+use SigmaPHP\Core\Commands\CoreCommand;
 
 /**
  * Create Provider Command.
  */
-class CreateProvider extends Command
+class CreateProvider extends CoreCommand
 {
     /**
      * Initialize the command.
@@ -33,10 +31,8 @@ class CreateProvider extends Command
     {
         $path = rootPath(config('app.providers_path'));
 
-        $filesystem = new Filesystem();
-
-        if (!$filesystem->exists($path)) {
-            $filesystem->createDir($path);
+        if (!$this->filesystem->exists($path)) {
+            $this->filesystem->createDir($path);
         }
 
         $providerName = $this->getArgument('name');
@@ -49,12 +45,12 @@ class CreateProvider extends Command
 
         $providerFile = concatPath($path, $providerName) . '.php';
 
-        $filesystem->create($providerFile);
-        $filesystem->write($providerFile,
+        $this->filesystem->create(
+            $providerFile,
             str_replace(
                 '$className',
                 $providerName,
-                $filesystem->read(
+                $this->filesystem->read(
                     concatPath(__DIR__, 'templates', 'provider.php.dist')
                 )
             )

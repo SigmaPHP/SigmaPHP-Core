@@ -2,14 +2,12 @@
 
 namespace SigmaPHP\Core\Commands;
 
-use SigmaPHP\Console\Command;
-use SigmaPHP\Filesystem\Filesystem;
-use SigmaPHP\Core\Exceptions\PathNotFoundException;
+use SigmaPHP\Core\Commands\CoreCommand;
 
 /**
  * Create Middleware Command.
  */
-class CreateMiddleware extends Command
+class CreateMiddleware extends CoreCommand
 {
     /**
      * Initialize the command.
@@ -33,10 +31,8 @@ class CreateMiddleware extends Command
     {
         $path = rootPath(config('app.middlewares_path'));
 
-        $filesystem = new Filesystem();
-
-        if (!$filesystem->exists($path)) {
-            $filesystem->createDir($path);
+        if (!$this->filesystem->exists($path)) {
+            $this->filesystem->createDir($path);
         }
 
         $middlewareName = $this->getArgument('name');
@@ -49,12 +45,12 @@ class CreateMiddleware extends Command
 
         $middlewareFile = concatPath($path, $middlewareName) . '.php';
 
-        $filesystem->create($middlewareFile);
-        $filesystem->write($middlewareFile,
+        $this->filesystem->create(
+            $middlewareFile,
             str_replace(
                 '$className',
                 $middlewareName,
-                $filesystem->read(
+                $this->filesystem->read(
                     concatPath(__DIR__, 'templates', 'middleware.php.dist')
                 )
             )

@@ -171,6 +171,12 @@ if (!function_exists('concatPath')) {
      * @return string
      */
     function concatPath(...$paths) {
-        container('filesystem')->concatPath(...$paths);
+        $finalPath = '';
+
+        foreach ($paths as $path) {
+            $finalPath .= $path . DIRECTORY_SEPARATOR;
+        }
+
+        return rtrim($finalPath, DIRECTORY_SEPARATOR);
     }
 }

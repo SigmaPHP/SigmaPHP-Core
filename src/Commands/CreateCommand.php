@@ -2,14 +2,12 @@
 
 namespace SigmaPHP\Core\Commands;
 
-use SigmaPHP\Console\Command;
-use SigmaPHP\Filesystem\Filesystem;
-use SigmaPHP\Core\Exceptions\PathNotFoundException;
+use SigmaPHP\Core\Commands\CoreCommand;
 
 /**
  * Create 'Custom Command' Command.
  */
-class CreateCommand extends Command
+class CreateCommand extends CoreCommand
 {
     /**
      * Initialize the command.
@@ -33,10 +31,8 @@ class CreateCommand extends Command
     {
         $path = rootPath(config('app.commands_path'));
 
-        $filesystem = new Filesystem();
-
-        if (!$filesystem->exists($path)) {
-            $filesystem->createDir($path);
+        if (!$this->filesystem->exists($path)) {
+            $this->filesystem->createDir($path);
         }
 
         $commandName = $this->getArgument('name');
@@ -49,12 +45,12 @@ class CreateCommand extends Command
 
         $commandFile = concatPath($path, $commandName) . '.php';
 
-        $filesystem->create($commandFile);
-        $filesystem->write($commandFile,
+        $this->filesystem->create(
+            $commandFile,
             str_replace(
                 '$className',
                 $commandName,
-                $filesystem->read(
+                $this->filesystem->read(
                     concatPath(__DIR__, 'templates', 'command.php.dist')
                 )
             )

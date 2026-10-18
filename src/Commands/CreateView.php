@@ -2,14 +2,12 @@
 
 namespace SigmaPHP\Core\Commands;
 
-use SigmaPHP\Console\Command;
-use SigmaPHP\Filesystem\Filesystem;
-use SigmaPHP\Core\Exceptions\PathNotFoundException;
+use SigmaPHP\Core\Commands\CoreCommand;
 
 /**
  * Create View Command.
  */
-class CreateView extends Command
+class CreateView extends CoreCommand
 {
     /**
      * Initialize the command.
@@ -33,15 +31,15 @@ class CreateView extends Command
     {
         $path = rootPath(config('app.views_path'));
 
-        $filesystem = new Filesystem();
-
-        if (!$filesystem->exists($path)) {
-            $filesystem->createDir($path);
+        if (!$this->filesystem->exists($path)) {
+            $this->filesystem->createDir($path);
         }
 
         $viewName = $this->getArgument('name');
 
-        $filesystem->create(concatPath($path, $viewName) . '.template.html');
+        $this->filesystem->create(
+            concatPath($path, $viewName) . '.template.html'
+        );
 
         $this->success(
             "The view '{$viewName}' was created successfully"

@@ -2,14 +2,12 @@
 
 namespace SigmaPHP\Core\Commands;
 
-use SigmaPHP\Console\Command;
-use SigmaPHP\Filesystem\Filesystem;
-use SigmaPHP\Core\Exceptions\PathNotFoundException;
+use SigmaPHP\Core\Commands\CoreCommand;
 
 /**
  * Create Uploads Command.
  */
-class CreateUploads extends Command
+class CreateUploads extends CoreCommand
 {
     /**
      * Initialize the command.
@@ -31,10 +29,8 @@ class CreateUploads extends Command
     {
         $path = rootPath(config('app.uploads_path'));
 
-        $filesystem = new Filesystem();
-
-        if (!$filesystem->exists($path)) {
-            $filesystem->createDir($path);
+        if (!$this->filesystem->exists($path)) {
+            $this->filesystem->createDir($path);
         }
 
         // create symbolic link

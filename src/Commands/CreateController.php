@@ -2,14 +2,12 @@
 
 namespace SigmaPHP\Core\Commands;
 
-use SigmaPHP\Console\Command;
-use SigmaPHP\Filesystem\Filesystem;
-use SigmaPHP\Core\Exceptions\PathNotFoundException;
+use SigmaPHP\Core\Commands\CoreCommand;
 
 /**
  * Create Controller Command.
  */
-class CreateController extends Command
+class CreateController extends CoreCommand
 {
     /**
      * Initialize the command.
@@ -33,10 +31,8 @@ class CreateController extends Command
     {
         $path = rootPath(config('app.controllers_path'));
 
-        $filesystem = new Filesystem();
-
-        if (!$filesystem->exists($path)) {
-            $filesystem->createDir($path);
+        if (!$this->filesystem->exists($path)) {
+            $this->filesystem->createDir($path);
         }
 
         $controllerName = $this->getArgument('name');
@@ -49,12 +45,12 @@ class CreateController extends Command
 
         $controllerFile = concatPath($path, $controllerName) . '.php';
 
-        $filesystem->create($controllerFile);
-        $filesystem->write($controllerFile,
+        $this->filesystem->create(
+            $controllerFile,
             str_replace(
                 '$className',
                 $controllerName,
-                $filesystem->read(
+                $this->filesystem->read(
                     concatPath(__DIR__, 'templates', 'controller.php.dist')
                 )
             )

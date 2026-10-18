@@ -2,14 +2,13 @@
 
 namespace SigmaPHP\Core\Commands;
 
-use SigmaPHP\Console\Command;
-use SigmaPHP\Filesystem\Filesystem;
+use SigmaPHP\Core\Commands\CoreCommand;
 use SigmaPHP\Core\Exceptions\PathNotFoundException;
 
 /**
  * Clear Cache Command.
  */
-class ClearCache extends Command
+class ClearCache extends CoreCommand
 {
     /**
      * Initialize the command.
@@ -31,14 +30,12 @@ class ClearCache extends Command
     {
         $path = rootPath(config('app.cache_path'));
 
-        $filesystem = new Filesystem();
-
-        if (!$filesystem->exists($path)) {
+        if (!$this->filesystem->exists($path)) {
             throw new PathNotFoundException("The path '{$path}' doesn't exist");
         }
 
-        $filesystem->removeDir($path);
-        $filesystem->createDir($path);
+        $this->filesystem->removeDir($path);
+        $this->filesystem->createDir($path);
 
         $this->success('Cache was cleared successfully');
     }

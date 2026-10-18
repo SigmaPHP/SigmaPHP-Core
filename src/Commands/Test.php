@@ -2,14 +2,13 @@
 
 namespace SigmaPHP\Core\Commands;
 
-use SigmaPHP\Console\Command;
-use SigmaPHP\Filesystem\Filesystem;
+use SigmaPHP\Core\Commands\CoreCommand;
 use SigmaPHP\Core\Exceptions\PathNotFoundException;
 
 /**
  * Test Command.
  */
-class Test extends Command
+class Test extends CoreCommand
 {
     /**
      * Initialize the command.
@@ -31,9 +30,7 @@ class Test extends Command
     {
         $path = rootPath('tests/');
 
-        $filesystem = new Filesystem();
-
-        if (!$filesystem->exists($path)) {
+        if (!$this->filesystem->exists($path)) {
             throw new PathNotFoundException(
                 "The {$path} directory doesn't exist"
             );

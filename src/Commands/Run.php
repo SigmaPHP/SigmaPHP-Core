@@ -2,14 +2,13 @@
 
 namespace SigmaPHP\Core\Commands;
 
-use SigmaPHP\Console\Command;
-use SigmaPHP\Filesystem\Filesystem;
+use SigmaPHP\Core\Commands\CoreCommand;
 use SigmaPHP\Core\Exceptions\PathNotFoundException;
 
 /**
  * Run Command.
  */
-class Run extends Command
+class Run extends CoreCommand
 {
     /**
      * Initialize the command.
@@ -33,9 +32,7 @@ class Run extends Command
     {
         $path = rootPath('public/');
 
-        $filesystem = new Filesystem();
-
-        if (!$filesystem->exists($path)) {
+        if (!$this->filesystem->exists($path)) {
             throw new PathNotFoundException(
                 "The public/ directory doesn't exist"
             );
