@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 
 use SigmaPHP\Core\Http\File;
-use SigmaPHP\Core\Exceptions\FileNotFoundException;
+use SigmaPHP\Core\Exceptions\PathNotFoundException;
 use SigmaPHP\Core\Exceptions\InvalidArgumentException;
 
 /**
@@ -100,7 +100,7 @@ class FileTest extends TestCase
      */
     public function testThrowsExceptionIfInvalidFileWasProvidedForSave()
     {
-        $this->expectException(FileNotFoundException::class);
+        $this->expectException(PathNotFoundException::class);
         $this->file->save([
             'name' => 'test.txt',
             'type' => 'text/plain',
@@ -142,7 +142,7 @@ class FileTest extends TestCase
      */
     public function testThrowsExceptionIfTryingToGetContentOfNonExistsFile()
     {
-        $this->expectException(FileNotFoundException::class);
+        $this->expectException(PathNotFoundException::class);
 
         $this->file->get('not_found');
     }

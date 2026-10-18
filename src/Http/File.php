@@ -2,7 +2,7 @@
 
 namespace SigmaPHP\Core\Http;
 
-use SigmaPHP\Core\Exceptions\FileNotFoundException;
+use SigmaPHP\Core\Exceptions\PathNotFoundException;
 use SigmaPHP\Core\Exceptions\InvalidArgumentException;
 use SigmaPHP\Core\Interfaces\Http\FileInterface;
 use SigmaPHP\Filesystem\Filesystem;
@@ -57,7 +57,7 @@ class File implements FileInterface
         if (!isset($fileData["tmp_name"]) ||
             !$this->filesystem->exists($fileData["tmp_name"])
         ) {
-            throw new FileNotFoundException(
+            throw new PathNotFoundException(
                 "The file you are trying to upload is invalid or doesn't exist"
             );
         }
@@ -92,7 +92,7 @@ class File implements FileInterface
         $fileFullPath = concatPath($this->storagePath, $fileName);
 
         if (!$this->filesystem->exists($fileFullPath)) {
-            throw new FileNotFoundException("File {$fileName} doesn't exist");
+            throw new PathNotFoundException("File {$fileName} doesn't exist");
         }
 
         return $this->filesystem->read($fileFullPath);

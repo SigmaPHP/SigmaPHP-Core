@@ -56,6 +56,19 @@ class CreateProvider extends CoreCommand
             )
         );
 
+        // register the new provider into the 'config/providers.php'
+        $providersList = $this->filesystem->read(
+            rootPath('config/providers.php')
+        );
+
+        // we just add the full class path before the ']'
+        $providersList = str_replace(
+            ']',
+            '\App\Providers\\' . $providerName . "::class\n]",
+            $providersList
+        );
+
+
         $this->success(
             "The service provider '{$providerName}' was created successfully"
         );
