@@ -66,6 +66,7 @@ class Kernel implements KernelInterface
             \SigmaPHP\Core\Providers\ViewServiceProvider::class,
             \SigmaPHP\Core\Providers\DBServiceProvider::class,
             \SigmaPHP\Core\Providers\HTTPServiceProvider::class,
+            \SigmaPHP\Core\Providers\FilesystemServiceProvider::class,
         ], $userDefinedProviders));
 
         // define shared template variables in the container
