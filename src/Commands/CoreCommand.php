@@ -3,6 +3,7 @@
 namespace SigmaPHP\Core\Commands;
 
 use SigmaPHP\Console\Command;
+use SigmaPHP\Console\Option;
 use SigmaPHP\Filesystem\Filesystem;
 
 /**
@@ -17,9 +18,13 @@ abstract class CoreCommand extends Command
 
     /**
      * Core Base Command Constructor.
+     *
+     * @param array<Option> $options
+     * @param array<string> $shortcuts
      */
-    public function __construct() {
-        parent::__construct();
+    public function __construct($options = [], $shortcuts = [])
+    {
+        parent::__construct($options, $shortcuts);
 
         $this->filesystem = new Filesystem();
     }
