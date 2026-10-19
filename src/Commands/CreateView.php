@@ -36,10 +36,17 @@ class CreateView extends CoreCommand
         }
 
         $viewName = $this->getArgument('name');
+        $viewFile = concatPath($path, $viewName) . '.template.html';
 
-        $this->filesystem->create(
-            concatPath($path, $viewName) . '.template.html'
-        );
+        if ($this->filesystem->exists($viewFile)) {
+            $this->info(
+                "The view '{$viewName}' already exists"
+            );
+
+            return;
+        }
+
+        $this->filesystem->create($viewFile);
 
         $this->success(
             "The view '{$viewName}' was created successfully"

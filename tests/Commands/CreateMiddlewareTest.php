@@ -26,4 +26,35 @@ class CreateMiddlewareTest extends CommandTestCase
 
         $this->assertTrue(file_exists($targetPath));
     }
+
+    /**
+     * Test middleware won't be created if already exists.
+     *
+     * @runInSeparateProcess
+     * @return void
+     */
+    public function testMiddlewareWillNotBeCreatedIfAlreadyExists()
+    {
+        $targetPath = 'middlewares/AuthMiddleware.php';
+
+        if (!file_exists($targetPath)) {
+            touch($targetPath);
+        }
+
+        $this->ioHandler->setOutputStream(fopen('php://output', 'r+'));
+
+        $command = $this->commandFactory(CreateMiddleware::class);
+
+        $command->getArguments()['name']->setValue('Auth');
+
+        $command->execute();
+
+        $this->expectOutputRegex(
+            "/The middleware 'AuthMiddleware' already exists/"
+        );
+
+        if (file_exists($targetPath)) {
+            unlink($targetPath);
+        }
+    }
 }

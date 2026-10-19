@@ -45,6 +45,14 @@ class CreateController extends CoreCommand
 
         $controllerFile = concatPath($path, $controllerName) . '.php';
 
+        if ($this->filesystem->exists($controllerFile)) {
+            $this->info(
+                "The controller '{$controllerName}' already exists"
+            );
+
+            return;
+        }
+
         $this->filesystem->create(
             $controllerFile,
             str_replace(

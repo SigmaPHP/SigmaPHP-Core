@@ -45,6 +45,14 @@ class CreateCommand extends CoreCommand
 
         $commandFile = concatPath($path, $commandName) . '.php';
 
+        if ($this->filesystem->exists($commandFile)) {
+            $this->info(
+                "The command '{$commandFile}' already exists"
+            );
+
+            return;
+        }
+
         $this->filesystem->create(
             $commandFile,
             str_replace(

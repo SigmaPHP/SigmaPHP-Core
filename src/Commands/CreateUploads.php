@@ -34,7 +34,14 @@ class CreateUploads extends CoreCommand
         }
 
         // create symbolic link
+        // ToDo: make uploads dynamic !!
         $publicPath = rootPath('public');
+
+        if ($this->filesystem->exists("{$publicPath}/uploads")) {
+            $this->info("'{$publicPath}/uploads' already exists");
+
+            return;
+        }
 
         exec("ln -s {$path} {$publicPath}/uploads &> /dev/null");
 

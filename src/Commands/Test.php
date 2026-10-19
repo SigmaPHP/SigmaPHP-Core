@@ -36,6 +36,6 @@ class Test extends CoreCommand
             );
         }
 
-        exec(rootPath('vendor/bin/') . "phpunit tests");
+        exec("./vendor/bin/phpunit {$path}");
     }
 }

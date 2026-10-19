@@ -45,6 +45,14 @@ class CreateProvider extends CoreCommand
 
         $providerFile = concatPath($path, $providerName) . '.php';
 
+        if ($this->filesystem->exists($providerFile)) {
+            $this->info(
+                "The service provider '{$providerName}' already exists"
+            );
+
+            return;
+        }
+
         $this->filesystem->create(
             $providerFile,
             str_replace(

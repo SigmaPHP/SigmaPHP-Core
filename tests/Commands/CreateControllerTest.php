@@ -26,4 +26,35 @@ class CreateControllerTest extends CommandTestCase
 
         $this->assertTrue(file_exists($targetPath));
     }
+
+    /**
+     * Test controller won't be created if already exists.
+     *
+     * @runInSeparateProcess
+     * @return void
+     */
+    public function testControllerWillNotBeCreatedIfAlreadyExists()
+    {
+        $targetPath = 'controllers/UserController.php';
+
+        if (!file_exists($targetPath)) {
+            touch($targetPath);
+        }
+
+        $this->ioHandler->setOutputStream(fopen('php://output', 'r+'));
+
+        $command = $this->commandFactory(CreateController::class);
+
+        $command->getArguments()['name']->setValue('User');
+
+        $command->execute();
+
+        $this->expectOutputRegex(
+            "/The controller 'UserController' already exists/"
+        );
+
+        if (file_exists($targetPath)) {
+            unlink($targetPath);
+        }
+    }
 }

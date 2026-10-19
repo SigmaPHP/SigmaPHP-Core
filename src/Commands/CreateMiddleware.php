@@ -45,6 +45,14 @@ class CreateMiddleware extends CoreCommand
 
         $middlewareFile = concatPath($path, $middlewareName) . '.php';
 
+        if ($this->filesystem->exists($middlewareFile)) {
+            $this->info(
+                "The middleware '{$middlewareName}' already exists"
+            );
+
+            return;
+        }
+
         $this->filesystem->create(
             $middlewareFile,
             str_replace(
