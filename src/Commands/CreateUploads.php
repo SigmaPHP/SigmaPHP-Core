@@ -27,23 +27,26 @@ class CreateUploads extends CoreCommand
      */
     public function execute()
     {
-        $path = rootPath(config('app.uploads_path'));
+        $path = rootPath(config('app.upload_path'));
 
         if (!$this->filesystem->exists($path)) {
             $this->filesystem->createDir($path);
         }
 
         // create symbolic link
-        // ToDo: make uploads dynamic !!
-        $publicPath = rootPath('public');
+        // here 'getFileName' will return the uploads dir's name
+        $uploadsDir = concatPath(
+            rootPath('public'),
+            $this->filesystem->getFileName($path)
+        );
 
-        if ($this->filesystem->exists("{$publicPath}/uploads")) {
-            $this->info("'{$publicPath}/uploads' already exists");
+        if ($this->filesystem->exists($uploadsDir)) {
+            $this->info("The uploads directory already exists");
 
             return;
         }
 
-        exec("ln -s {$path} {$publicPath}/uploads &> /dev/null");
+        $this->filesystem->symlink($path, $uploadsDir);
 
         $this->success("Uploads directory was created successfully");
     }
