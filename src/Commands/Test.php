@@ -36,6 +36,9 @@ class Test extends CoreCommand
             );
         }
 
-        exec("./vendor/bin/phpunit {$path}");
+        // we will use `passthru` here since, `exec` doesn't support interactive
+        // output. Still `passthru` has a limitations with colors! that said, we
+        // need to enhance this behavior in future!
+        passthru("./vendor/bin/phpunit {$path}");
     }
 }
