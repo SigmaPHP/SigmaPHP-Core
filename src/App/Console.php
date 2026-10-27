@@ -40,7 +40,13 @@ class Console
         $app->loadCommands(
             rootPath('vendor/sigmaphp/sigmaphp-core/src/Commands'),
             '\SigmaPHP\Core\Commands',
-            ['CoreCommand']
+            [
+                'CoreCommand',
+                'command.php',
+                'controller.php',
+                'middleware.php',
+                'provider.php',
+            ]
         );
 
         $app->loadCommands(
