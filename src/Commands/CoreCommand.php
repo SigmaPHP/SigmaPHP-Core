@@ -1,6 +1,6 @@
 <?php
 
-namespace SigmaPHP\Core\App;
+namespace SigmaPHP\Core\Commands;
 
 use SigmaPHP\Console\Command;
 use SigmaPHP\Console\Option;

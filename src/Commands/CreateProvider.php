@@ -2,7 +2,7 @@
 
 namespace SigmaPHP\Core\Commands;
 
-use SigmaPHP\Core\App\CoreCommand;
+use SigmaPHP\Core\Commands\CoreCommand;
 
 /**
  * Create Provider Command.
