@@ -37,6 +37,7 @@ class Console
             rootPath('config/database.php')
         );
 
+        // core commands
         $app->loadCommands(
             rootPath('vendor/sigmaphp/sigmaphp-core/src/Commands'),
             '\SigmaPHP\Core\Commands',
@@ -49,11 +50,13 @@ class Console
             ]
         );
 
+        // DB commands
         $app->loadCommands(
             rootPath('vendor/sigmaphp/sigmaphp-db/src/Commands'),
             '\SigmaPHP\DB\Commands',
             [
                 'DbCommand',
+                'CreateConfig',
                 'add_column_migration.php',
                 'create_table_migration.php',
                 'database.php',
@@ -61,6 +64,12 @@ class Console
                 'model.php',
                 'seeder.php',
             ]
+        );
+
+        // user defined commands
+        $app->loadCommands(
+            rootPath(config('app.commands_path')),
+            '\App\Commands'
         );
 
         $app->run();
