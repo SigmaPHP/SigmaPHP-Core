@@ -29,43 +29,10 @@ class CreateCommand extends CoreCommand
      */
     public function execute()
     {
-        $path = rootPath(config('app.commands_path'));
-
-        if (!$this->filesystem->exists($path)) {
-            $this->filesystem->createDir($path);
-        }
-
-        $commandName = $this->getArgument('name');
-
-        // add 'Command' automatically if the name doesn't have it
-        // and if does , then ignore
-        if (stripos($commandName, 'Command') === false) {
-            $commandName .= 'Command';
-        }
-
-        $commandFile = concatPath($path, $commandName) . '.php';
-
-        if ($this->filesystem->exists($commandFile)) {
-            $this->info(
-                "The command '{$commandFile}' already exists"
-            );
-
-            return;
-        }
-
-        $this->filesystem->create(
-            $commandFile,
-            str_replace(
-                '$className',
-                $commandName,
-                $this->filesystem->read(
-                    concatPath(__DIR__, 'templates', 'command.php.dist')
-                )
-            )
-        );
-
-        $this->success(
-            "The command '{$commandName}' was created successfully"
+        $this->createClass(
+            config('app.commands_path'),
+            'command',
+            $this->getArgument('name')
         );
     }
 }

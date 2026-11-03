@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace $namespace;
 
 use SigmaPHP\Container\Interfaces\ServiceProviderInterface;
 use SigmaPHP\Container\Container;

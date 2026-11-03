@@ -29,43 +29,10 @@ class CreateMiddleware extends CoreCommand
      */
     public function execute()
     {
-        $path = rootPath(config('app.middlewares_path'));
-
-        if (!$this->filesystem->exists($path)) {
-            $this->filesystem->createDir($path);
-        }
-
-        $middlewareName = $this->getArgument('name');
-
-        // add 'Middleware' automatically if the name doesn't have it
-        // and if does , then ignore
-        if (stripos($middlewareName, 'Middleware') === false) {
-            $middlewareName .= 'Middleware';
-        }
-
-        $middlewareFile = concatPath($path, $middlewareName) . '.php';
-
-        if ($this->filesystem->exists($middlewareFile)) {
-            $this->info(
-                "The middleware '{$middlewareName}' already exists"
-            );
-
-            return;
-        }
-
-        $this->filesystem->create(
-            $middlewareFile,
-            str_replace(
-                '$className',
-                $middlewareName,
-                $this->filesystem->read(
-                    concatPath(__DIR__, 'templates', 'middleware.php.dist')
-                )
-            )
-        );
-
-        $this->success(
-            "The middleware '{$middlewareName}' was created successfully"
+        $this->createClass(
+            config('app.middlewares_path'),
+            'middleware',
+            $this->getArgument('name')
         );
     }
 }

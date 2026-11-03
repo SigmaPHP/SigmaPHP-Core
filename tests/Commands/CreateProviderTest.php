@@ -27,7 +27,7 @@ class CreateProviderTest extends CommandTestCase
         $this->assertTrue(
             (bool) strpos(
                 file_get_contents('config/providers.php'),
-                '\App\Providers\UserServiceProvider::class,',
+                '\Providers\UserServiceProvider::class,',
             )
         );
 
@@ -35,7 +35,7 @@ class CreateProviderTest extends CommandTestCase
 
         // remove the dummy provider!
         $original = str_replace(
-            '\App\Providers\UserServiceProvider::class,',
+            '\Providers\UserServiceProvider::class,',
             '',
             file_get_contents('config/providers.php'),
         );

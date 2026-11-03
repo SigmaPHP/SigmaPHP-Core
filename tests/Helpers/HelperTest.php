@@ -231,4 +231,17 @@ class HelperTest extends TestCase
             concatPath('var', 'www', 'html', 'app')
         );
     }
+
+    /**
+     * Test create namespace.
+     *
+     * @return void
+     */
+    public function testCreateNamespace()
+    {
+        $this->assertEquals(
+            'Foo\Bar\Baz',
+            createNamespace('foo/bar/baz')
+        );
+    }
 }

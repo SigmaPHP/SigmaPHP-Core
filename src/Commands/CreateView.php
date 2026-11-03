@@ -29,27 +29,13 @@ class CreateView extends CoreCommand
      */
     public function execute()
     {
-        $path = rootPath(config('app.views_path'));
-
-        if (!$this->filesystem->exists($path)) {
-            $this->filesystem->createDir($path);
-        }
-
-        $viewName = $this->getArgument('name');
-        $viewFile = concatPath($path, $viewName) . '.template.html';
-
-        if ($this->filesystem->exists($viewFile)) {
-            $this->info(
-                "The view '{$viewName}' already exists"
-            );
-
-            return;
-        }
-
-        $this->filesystem->create($viewFile);
-
-        $this->success(
-            "The view '{$viewName}' was created successfully"
+        $this->createClass(
+            config('app.views_path'),
+            'view',
+            $this->getArgument('name'),
+            true,
+            true,
+            'template.html'
         );
     }
 }

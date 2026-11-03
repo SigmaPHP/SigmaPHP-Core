@@ -5,6 +5,7 @@ namespace SigmaPHP\Core\App;
 use SigmaPHP\Console\App;
 use SigmaPHP\Console\DataType;
 use SigmaPHP\Console\Option;
+use SigmaPHP\Filesystem\Filesystem;
 
 /**
  * Console Class
@@ -46,7 +47,7 @@ class Console
                 'command.php',
                 'controller.php',
                 'middleware.php',
-                'provider.php',
+                'service_provider.php',
             ]
         );
 
@@ -67,10 +68,18 @@ class Console
         );
 
         // user defined commands
-        $app->loadCommands(
-            rootPath(config('app.commands_path')),
-            '\App\Commands'
-        );
+        if (container('filesystem')->exists(
+            rootPath(config('app.commands_path')))
+        ) {
+            $filesystem = container()->get('filesystem');
+
+            foreach ($filesystem->list(
+                rootPath(config('app.commands_path'))
+                , true, false, true) as $command
+            ) {
+                $app->addCommand(createNamespace($command));
+            }
+        }
 
         $app->run();
     }

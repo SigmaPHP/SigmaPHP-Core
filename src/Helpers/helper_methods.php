@@ -174,3 +174,19 @@ if (!function_exists('concatPath')) {
         return implode(DIRECTORY_SEPARATOR, $paths);
     }
 }
+
+if (!function_exists('createNamespace')) {
+    /**
+     * Create a namespace using a file path.
+     *
+     * @param string $path
+     * @return string
+     */
+    function createNamespace($path) {
+        // remove the root path if exists in the path
+        // replace "/" with "\"
+        $namespace = str_replace(rootPath(), '', $path);
+        $namespace = str_replace(DIRECTORY_SEPARATOR, "\\", $namespace);
+        return ucwords($namespace, "\\");
+    }
+}

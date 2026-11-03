@@ -29,60 +29,14 @@ class CreateProvider extends CoreCommand
      */
     public function execute()
     {
-        $path = rootPath(config('app.providers_path'));
-
-        if (!$this->filesystem->exists($path)) {
-            $this->filesystem->createDir($path);
-        }
-
-        $providerName = $this->getArgument('name');
-
-        // add 'ServiceProvider' automatically if the name doesn't have it
-        // and if does , then ignore
-        if (stripos($providerName, 'ServiceProvider') === false) {
-            $providerName .= 'ServiceProvider';
-        }
-
-        $providerFile = concatPath($path, $providerName) . '.php';
-
-        if ($this->filesystem->exists($providerFile)) {
-            $this->info(
-                "The service provider '{$providerName}' already exists"
-            );
-
-            return;
-        }
-
-        $this->filesystem->create(
-            $providerFile,
-            str_replace(
-                '$className',
-                $providerName,
-                $this->filesystem->read(
-                    concatPath(__DIR__, 'templates', 'provider.php.dist')
-                )
-            )
-        );
-
-        // register the new provider into the 'config/providers.php'
-        $providersList = $this->filesystem->read(
+        $this->createClass(
+            config('app.providers_path'),
+            'service provider',
+            $this->getArgument('name'),
+            false,
+            false,
+            'php',
             rootPath('config/providers.php')
-        );
-
-        // we just add the full class path before the ']'
-        $providersList = str_replace(
-            ']',
-            "    \App\Providers\\" . $providerName . "::class,\n]",
-            $providersList
-        );
-
-        $this->filesystem->write(
-            rootPath('config/providers.php'),
-            $providersList
-        );
-
-        $this->success(
-            "The service provider '{$providerName}' was created successfully"
         );
     }
 }
