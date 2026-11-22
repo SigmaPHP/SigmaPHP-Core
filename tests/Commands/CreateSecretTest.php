@@ -24,9 +24,9 @@ class CreateSecretTest extends CommandTestCase
         $command->execute();
 
         $this->assertTrue(
-            strpos(
+            preg_match(
+                '/APP_SECRET_KEY=.{32}/',
                 file_get_contents('.env'),
-                'APP_SECRET_KEY=]D8AvBbt3A!BE*FcW@C0{*-[$=ZcV&y0'
             ) !== false
         );
     }

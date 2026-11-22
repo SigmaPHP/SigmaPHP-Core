@@ -44,10 +44,10 @@ class CreateSecret extends CoreCommand
         }
 
         // generate new secret key
-        $key = PassGen::generate(self::APP_SECRET_KEY_LENGTH);
-
-        // replace invalid symbols from the generated key
-        $key  = str_replace(['#', '\'', '"'], ['Z', 'X', '7'], $key);
+        $key = (new \PassGen\Password())
+            ->length(self::APP_SECRET_KEY_LENGTH)
+            ->exclude(['#', '\'', '"'])
+            ->create();
 
         $envFile = $this->filesystem->read($path);
 

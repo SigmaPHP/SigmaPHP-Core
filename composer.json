@@ -31,7 +31,7 @@
         "sigmaphp/sigmaphp-collections": "^0.1",
         "sigmaphp/sigmaphp-console": "^0.1",
         "sigmaphp/sigmaphp-filesystem": "^0.1",
-        "agashe/passgen": "^1",
+        "agashe/passgen": "^2",
         "agashe/env-parser": "^1",
         "agashe/var-dumper": "^0.1"
     },
